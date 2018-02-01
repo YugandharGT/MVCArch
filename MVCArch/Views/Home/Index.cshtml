@@ -1,0 +1,70 @@
+﻿
+@model MVCArch.Models.ViewModel.BasicViewModel
+
+@{
+    ViewBag.Title = "Home Page";
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index</title>
+    <style type="text/css">
+        .webGrid {
+            margin: 4px;
+            border-collapse: collapse;
+            width: 500px;
+            background-color: #FCFCFC;
+        }
+
+        .header {
+            background-color: #C1D4E6;
+            font-weight: bold;
+            color: #FFF;
+        }
+
+        .gridHead a:hover {
+            text-decoration: underline;
+        }
+
+        .alt {
+            background-color: #E4E9F5;
+            color: #000;
+        }
+
+        .select {
+            background-color: #389DF5;
+        }
+    </style>
+</head>
+<body>
+    @{
+        WebGrid webGrid = new WebGrid(Model.homeVM, canPage: true, rowsPerPage: 25, canSort: true, selectionFieldName: "selectedRow", ajaxUpdateContainerId: "webGrid");
+        webGrid.Pager(WebGridPagerModes.NextPrevious);
+    }
+    <div id="grid">
+        @webGrid.GetHtml(
+
+tableStyle: "webGrid", mode: WebGridPagerModes.All,
+
+firstText: "<< First",
+previousText: "< Prev",
+nextText: "Next >",
+lastText: "Last >>",
+headerStyle: "header",
+alternatingRowStyle: "alt",
+selectedRowStyle: "select",
+columns: webGrid.Columns(
+webGrid.Column("EventID", "Event ID"),
+webGrid.Column("EventName", "Event Name"),
+webGrid.Column("EventDate", "Event Date"),
+webGrid.Column("CountryName", "Country Name"),
+webGrid.Column("CategoryName", "Category Name")
+)
+)
+
+    </div>
+</body>
+</html>
